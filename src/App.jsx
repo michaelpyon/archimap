@@ -82,14 +82,14 @@ export default function App() {
       </header>
 
       {/* Filters */}
-      <section className="px-6 max-w-5xl mx-auto mb-6 animate-fade-up" style={{ animationDelay: '400ms' }}>
-        <div className="flex flex-wrap gap-3 items-center">
+      <section className="px-6 max-w-5xl mx-auto mb-4 animate-fade-up" style={{ animationDelay: '400ms' }}>
+        <div className="flex gap-2 items-center overflow-x-auto pb-2 scrollbar-thin">
           <select
             value={selectedStyle}
             onChange={(e) => { setSelectedStyle(e.target.value); setActiveBuilding(0); }}
-            className="bg-surface border border-border rounded-md px-3 py-2 text-xs text-text-muted focus:outline-none focus:border-text-subtle"
+            className="bg-surface border border-border rounded-md px-2 py-1.5 text-[11px] text-text-muted focus:outline-none focus:border-text-subtle shrink-0"
           >
-            <option value="">All Styles</option>
+            <option value="">Style</option>
             {ALL_STYLES.map(s => (
               <option key={s} value={s}>{s}</option>
             ))}
@@ -98,8 +98,9 @@ export default function App() {
           <select
             value={ERAS.indexOf(selectedEra)}
             onChange={(e) => { setSelectedEra(ERAS[Number(e.target.value)]); setActiveBuilding(0); }}
-            className="bg-surface border border-border rounded-md px-3 py-2 text-xs text-text-muted focus:outline-none focus:border-text-subtle"
+            className="bg-surface border border-border rounded-md px-2 py-1.5 text-[11px] text-text-muted focus:outline-none focus:border-text-subtle shrink-0"
           >
+            <option value="" disabled>Era</option>
             {ERAS.map((era, i) => (
               <option key={era.label} value={i}>{era.label}</option>
             ))}
@@ -108,9 +109,9 @@ export default function App() {
           <select
             value={selectedNeighborhood}
             onChange={(e) => { setSelectedNeighborhood(e.target.value); setActiveBuilding(0); }}
-            className="bg-surface border border-border rounded-md px-3 py-2 text-xs text-text-muted focus:outline-none focus:border-text-subtle"
+            className="bg-surface border border-border rounded-md px-2 py-1.5 text-[11px] text-text-muted focus:outline-none focus:border-text-subtle shrink-0"
           >
-            <option value="">All Neighborhoods</option>
+            <option value="">Area</option>
             {ALL_NEIGHBORHOODS.map(n => (
               <option key={n} value={n}>{n}</option>
             ))}
@@ -119,14 +120,14 @@ export default function App() {
           {hasFilters && (
             <button
               onClick={clearFilters}
-              className="text-[10px] font-mono text-text-subtle hover:text-text tracking-wide"
+              className="text-[10px] font-mono text-text-subtle hover:text-text tracking-wide shrink-0"
             >
-              Clear filters
+              Clear
             </button>
           )}
 
-          <span className="text-[10px] font-mono text-text-subtle ml-auto">
-            {filteredBuildings.length} of {ALL_BUILDINGS.length} buildings
+          <span className="text-[10px] font-mono text-text-subtle ml-auto shrink-0">
+            {filteredBuildings.length}/{ALL_BUILDINGS.length}
           </span>
         </div>
       </section>
