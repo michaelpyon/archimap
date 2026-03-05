@@ -1,6 +1,5 @@
 import { useState, useMemo } from 'react';
 import walks from './data/walks';
-import NeighborhoodSelector from './components/NeighborhoodSelector';
 import WalkMap from './components/WalkMap';
 import BuildingCard from './components/BuildingCard';
 
@@ -13,42 +12,61 @@ const ERAS = [
   { label: 'Modern (1970+)', min: 1970, max: 9999 },
 ];
 
-// Extract all unique styles from the data
-const ALL_STYLES = [...new Set(
-  walks.flatMap(w => w.buildings.map(b => b.style))
-)].sort();
+// Flatten all buildings with neighborhood info
+const ALL_BUILDINGS = walks.flatMap(w =>
+  w.buildings.map(b => ({ ...b, neighborhood: w.neighborhood, borough: w.borough, walkId: w.id }))
+);
+
+const ALL_STYLES = [...new Set(ALL_BUILDINGS.map(b => b.style))].sort();
+const ALL_NEIGHBORHOODS = walks.map(w => w.neighborhood);
 
 export default function App() {
-  const [selectedWalk, setSelectedWalk] = useState(null);
   const [activeBuilding, setActiveBuilding] = useState(0);
   const [selectedStyle, setSelectedStyle] = useState('');
   const [selectedEra, setSelectedEra] = useState(ERAS[0]);
+  const [selectedNeighborhood, setSelectedNeighborhood] = useState('');
 
-  function handleSelectWalk(walk) {
-    setSelectedWalk(walk);
+  // Filter buildings across all neighborhoods
+  const filteredBuildings = useMemo(() => {
+    return ALL_BUILDINGS.filter(b => {
+      const styleMatch = !selectedStyle || b.style.includes(selectedStyle);
+      const eraMatch = b.year >= selectedEra.min && b.year <= selectedEra.max;
+      const hoodMatch = !selectedNeighborhood || b.neighborhood === selectedNeighborhood;
+      return styleMatch && eraMatch && hoodMatch;
+    });
+  }, [selectedStyle, selectedEra, selectedNeighborhood]);
+
+  // Build a virtual walk object for the map from filtered results
+  const mapWalk = useMemo(() => {
+    if (filteredBuildings.length === 0) return null;
+    // Compute center from filtered buildings
+    const avgLat = filteredBuildings.reduce((s, b) => s + b.lat, 0) / filteredBuildings.length;
+    const avgLng = filteredBuildings.reduce((s, b) => s + b.lng, 0) / filteredBuildings.length;
+    // Zoom out more when showing multiple neighborhoods
+    const neighborhoods = new Set(filteredBuildings.map(b => b.neighborhood));
+    const zoom = neighborhoods.size > 1 ? 12 : 15;
+    return {
+      id: 'filtered',
+      neighborhood: neighborhoods.size === 1 ? [...neighborhoods][0] : 'NYC',
+      center: [avgLat, avgLng],
+      zoom,
+      buildings: filteredBuildings,
+    };
+  }, [filteredBuildings]);
+
+  function clearFilters() {
+    setSelectedStyle('');
+    setSelectedEra(ERAS[0]);
+    setSelectedNeighborhood('');
     setActiveBuilding(0);
   }
 
-  // Filter buildings within the selected walk
-  const filteredBuildings = useMemo(() => {
-    if (!selectedWalk) return [];
-    return selectedWalk.buildings.filter(b => {
-      const styleMatch = !selectedStyle || b.style.includes(selectedStyle);
-      const eraMatch = b.year >= selectedEra.min && b.year <= selectedEra.max;
-      return styleMatch && eraMatch;
-    });
-  }, [selectedWalk, selectedStyle, selectedEra]);
-
-  // Create a filtered walk object for the map
-  const filteredWalk = useMemo(() => {
-    if (!selectedWalk) return null;
-    return { ...selectedWalk, buildings: filteredBuildings };
-  }, [selectedWalk, filteredBuildings]);
+  const hasFilters = selectedStyle || selectedEra !== ERAS[0] || selectedNeighborhood;
 
   return (
     <div className="min-h-screen bg-bg">
       {/* Header */}
-      <header className="px-6 pt-12 pb-8 max-w-5xl mx-auto sm:pt-16 sm:pb-10">
+      <header className="px-6 pt-12 pb-6 max-w-5xl mx-auto sm:pt-16 sm:pb-8">
         <h1
           className="font-display text-4xl sm:text-6xl text-text tracking-tight leading-[0.95] mb-3 animate-fade-up"
           style={{ animationDelay: '100ms' }}
@@ -59,119 +77,98 @@ export default function App() {
           className="text-text-muted text-sm leading-relaxed max-w-md animate-fade-up"
           style={{ animationDelay: '250ms' }}
         >
-          Pick a neighborhood. Walk the route. See the architecture.
+          Explore NYC architecture by style, era, or neighborhood.
         </p>
       </header>
 
-      {/* Neighborhood Selector */}
-      <section
-        className="px-6 max-w-5xl mx-auto mb-6 animate-fade-up"
-        style={{ animationDelay: '400ms' }}
-      >
-        <p className="text-text-subtle text-xs font-mono tracking-widest uppercase mb-4">
-          Neighborhoods
-        </p>
-        <NeighborhoodSelector
-          walks={walks}
-          selected={selectedWalk}
-          onSelect={handleSelectWalk}
-        />
+      {/* Filters */}
+      <section className="px-6 max-w-5xl mx-auto mb-6 animate-fade-up" style={{ animationDelay: '400ms' }}>
+        <div className="flex flex-wrap gap-3 items-center">
+          <select
+            value={selectedStyle}
+            onChange={(e) => { setSelectedStyle(e.target.value); setActiveBuilding(0); }}
+            className="bg-surface border border-border rounded-md px-3 py-2 text-xs text-text-muted focus:outline-none focus:border-text-subtle"
+          >
+            <option value="">All Styles</option>
+            {ALL_STYLES.map(s => (
+              <option key={s} value={s}>{s}</option>
+            ))}
+          </select>
+
+          <select
+            value={ERAS.indexOf(selectedEra)}
+            onChange={(e) => { setSelectedEra(ERAS[Number(e.target.value)]); setActiveBuilding(0); }}
+            className="bg-surface border border-border rounded-md px-3 py-2 text-xs text-text-muted focus:outline-none focus:border-text-subtle"
+          >
+            {ERAS.map((era, i) => (
+              <option key={era.label} value={i}>{era.label}</option>
+            ))}
+          </select>
+
+          <select
+            value={selectedNeighborhood}
+            onChange={(e) => { setSelectedNeighborhood(e.target.value); setActiveBuilding(0); }}
+            className="bg-surface border border-border rounded-md px-3 py-2 text-xs text-text-muted focus:outline-none focus:border-text-subtle"
+          >
+            <option value="">All Neighborhoods</option>
+            {ALL_NEIGHBORHOODS.map(n => (
+              <option key={n} value={n}>{n}</option>
+            ))}
+          </select>
+
+          {hasFilters && (
+            <button
+              onClick={clearFilters}
+              className="text-[10px] font-mono text-text-subtle hover:text-text tracking-wide"
+            >
+              Clear filters
+            </button>
+          )}
+
+          <span className="text-[10px] font-mono text-text-subtle ml-auto">
+            {filteredBuildings.length} of {ALL_BUILDINGS.length} buildings
+          </span>
+        </div>
       </section>
 
-      {/* Walk Content */}
-      {selectedWalk && (
-        <main className="px-6 max-w-5xl mx-auto pb-16 animate-fade-in">
-          {/* Walk header */}
-          <div className="mb-4 mt-4">
-            <div className="flex items-baseline gap-3 mb-1">
-              <h2 className="text-lg font-semibold text-text tracking-tight">
-                {selectedWalk.neighborhood}
-              </h2>
-              <span className="text-[10px] font-mono text-text-subtle tracking-wide">
-                {selectedWalk.borough}
-              </span>
+      {/* Map + Building List */}
+      <main className="px-6 max-w-5xl mx-auto pb-16">
+        {filteredBuildings.length > 0 ? (
+          <div className="grid gap-6 lg:grid-cols-[1fr_340px]">
+            <WalkMap
+              walk={mapWalk}
+              activeBuilding={activeBuilding}
+              onBuildingClick={setActiveBuilding}
+            />
+
+            <div className="space-y-2 max-h-[500px] overflow-y-auto pr-1 scrollbar-thin">
+              {filteredBuildings.map((building, i) => (
+                <BuildingCard
+                  key={`${building.walkId}-${building.name}`}
+                  building={building}
+                  index={i}
+                  isActive={activeBuilding === i}
+                  onClick={() => setActiveBuilding(i)}
+                />
+              ))}
             </div>
-            <p className="text-xs text-text-muted leading-relaxed">
-              {selectedWalk.description}
-            </p>
           </div>
-
-          {/* Filters */}
-          <div className="flex flex-wrap gap-3 mb-6">
-            <select
-              value={selectedStyle}
-              onChange={(e) => { setSelectedStyle(e.target.value); setActiveBuilding(0); }}
-              className="bg-surface border border-border rounded-md px-3 py-1.5 text-xs text-text-muted focus:outline-none focus:border-text-subtle"
-            >
-              <option value="">All Styles</option>
-              {ALL_STYLES.map(s => (
-                <option key={s} value={s}>{s}</option>
-              ))}
-            </select>
-
-            <select
-              value={ERAS.indexOf(selectedEra)}
-              onChange={(e) => { setSelectedEra(ERAS[Number(e.target.value)]); setActiveBuilding(0); }}
-              className="bg-surface border border-border rounded-md px-3 py-1.5 text-xs text-text-muted focus:outline-none focus:border-text-subtle"
-            >
-              {ERAS.map((era, i) => (
-                <option key={era.label} value={i}>{era.label}</option>
-              ))}
-            </select>
-
-            {(selectedStyle || selectedEra !== ERAS[0]) && (
+        ) : (
+          <div className="py-20 text-center">
+            <p className="text-text-subtle text-xs font-mono tracking-wide">
+              No buildings match these filters
+            </p>
+            {hasFilters && (
               <button
-                onClick={() => { setSelectedStyle(''); setSelectedEra(ERAS[0]); setActiveBuilding(0); }}
-                className="text-[10px] font-mono text-text-subtle hover:text-text tracking-wide"
+                onClick={clearFilters}
+                className="mt-3 text-xs text-text-muted hover:text-text font-mono"
               >
                 Clear filters
               </button>
             )}
-
-            <span className="text-[10px] font-mono text-text-subtle self-center ml-auto">
-              {filteredBuildings.length} of {selectedWalk.buildings.length} stops
-            </span>
           </div>
-
-          {/* Map + Building List */}
-          {filteredBuildings.length > 0 ? (
-            <div className="grid gap-6 lg:grid-cols-[1fr_340px]">
-              <WalkMap
-                walk={filteredWalk}
-                activeBuilding={activeBuilding}
-                onBuildingClick={setActiveBuilding}
-              />
-
-              <div className="space-y-2 max-h-[500px] overflow-y-auto pr-1 scrollbar-thin">
-                {filteredBuildings.map((building, i) => (
-                  <BuildingCard
-                    key={`${selectedWalk.id}-${building.name}`}
-                    building={building}
-                    index={i}
-                    isActive={activeBuilding === i}
-                    onClick={() => setActiveBuilding(i)}
-                  />
-                ))}
-              </div>
-            </div>
-          ) : (
-            <div className="py-12 text-center">
-              <p className="text-text-subtle text-xs font-mono">
-                No buildings match these filters in {selectedWalk.neighborhood}
-              </p>
-            </div>
-          )}
-        </main>
-      )}
-
-      {/* Empty State */}
-      {!selectedWalk && (
-        <div className="px-6 max-w-5xl mx-auto py-20 text-center animate-fade-in">
-          <p className="text-text-subtle text-xs font-mono tracking-wide">
-            Select a neighborhood to begin
-          </p>
-        </div>
-      )}
+        )}
+      </main>
 
       {/* Footer */}
       <footer className="px-6 pb-8 max-w-5xl mx-auto border-t border-border pt-6 mt-12">
