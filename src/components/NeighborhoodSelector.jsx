@@ -9,7 +9,7 @@ export default function NeighborhoodSelector({ walks, selected, onSelect }) {
             px-3 py-1.5 rounded text-xs font-mono tracking-wide transition-all duration-200 border
             ${
               selected?.id === walk.id
-                ? 'bg-white text-black border-white'
+                ? 'bg-accent text-bg border-accent'
                 : 'bg-transparent text-text-muted border-border hover:text-text hover:border-border-hover'
             }
           `}
