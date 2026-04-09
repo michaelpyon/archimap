@@ -2,14 +2,24 @@
 @import "leaflet/dist/leaflet.css";
 
 @theme {
-  --color-bg: #0a0a0a;
-  --color-surface: #111111;
-  --color-surface-hover: #161616;
-  --color-text: #e5e5e5;
-  --color-text-muted: #737373;
-  --color-text-subtle: #525252;
-  --color-border: #1e1e1e;
-  --color-border-hover: #333333;
+  /* Warm Art Deco palette — Stitch design tokens */
+  --color-bg: #FAF7F0;
+  --color-surface: #F2EDE4;
+  --color-surface-hover: #E8E1D5;
+  --color-text: #2D2D2D;
+  --color-text-muted: #6B6B6B;
+  --color-text-subtle: #9B9B9B;
+  --color-border: #D4CFC5;
+  --color-border-hover: #B8B1A4;
+
+  /* Art Deco gold */
+  --color-accent: #B8860B;
+  --color-accent-hover: #996F09;
+  --color-accent-dim: rgba(184, 134, 11, 0.1);
+
+  /* Architectural green */
+  --color-secondary: #2D5F4A;
+  --color-secondary-dim: rgba(45, 95, 74, 0.1);
 }
 
 html {
@@ -63,29 +73,30 @@ body {
   background: transparent;
 }
 .scrollbar-thin::-webkit-scrollbar-thumb {
-  background: #333;
+  background: var(--color-border-hover);
   border-radius: 2px;
 }
 
-/* Leaflet overrides for dark theme */
+/* Leaflet overrides for warm theme */
 .leaflet-container {
-  background: #0a0a0a;
+  background: var(--color-bg);
   font-family: 'Inter', sans-serif;
 }
 
 .leaflet-popup-content-wrapper {
-  background: #111;
-  color: #e5e5e5;
+  background: var(--color-surface);
+  color: var(--color-text);
   border-radius: 8px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 4px 16px rgba(45, 45, 45, 0.12);
 }
 
 .leaflet-popup-tip {
-  background: #111;
+  background: var(--color-surface);
 }
 
 .leaflet-popup-close-button {
-  color: #737373 !important;
+  color: var(--color-text-muted) !important;
 }
 
 .archimap-marker {
@@ -94,5 +105,5 @@ body {
 }
 
 ::selection {
-  background: #e5e5e520;
+  background: var(--color-accent-dim);
 }
