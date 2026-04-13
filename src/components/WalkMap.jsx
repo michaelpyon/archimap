@@ -17,16 +17,16 @@ function createNumberedIcon(number, isActive) {
       width: 28px;
       height: 28px;
       border-radius: 50%;
-      background: ${isActive ? '#fff' : '#525252'};
-      color: ${isActive ? '#0a0a0a' : '#e5e5e5'};
+      background: ${isActive ? '#B8860B' : '#FAF7F0'};
+      color: ${isActive ? '#FAF7F0' : '#2D2D2D'};
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 12px;
       font-weight: 600;
-      font-family: 'JetBrains Mono', monospace;
-      border: 2px solid ${isActive ? '#fff' : '#737373'};
-      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+      font-family: 'Inter', sans-serif;
+      border: 2px solid ${isActive ? '#996F09' : '#D4CFC5'};
+      box-shadow: 0 2px 8px rgba(45,45,45,0.15);
       transition: all 0.2s ease;
     ">${number}</div>`,
     iconSize: [28, 28],
@@ -60,7 +60,7 @@ export default function WalkMap({ walk, activeBuilding, onBuildingClick }) {
         attributionControl={false}
       >
         <TileLayer
-          url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+          url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>'
         />
         <MapUpdater center={walk.center} zoom={walk.zoom} />
@@ -69,10 +69,10 @@ export default function WalkMap({ walk, activeBuilding, onBuildingClick }) {
         <Polyline
           positions={routeCoords}
           pathOptions={{
-            color: '#525252',
+            color: '#B8860B',
             weight: 2,
             dashArray: '6, 8',
-            opacity: 0.7,
+            opacity: 0.5,
           }}
         />
 
@@ -87,10 +87,10 @@ export default function WalkMap({ walk, activeBuilding, onBuildingClick }) {
             }}
           >
             <Popup>
-              <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '13px', color: '#0a0a0a' }}>
+              <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '13px', color: '#2D2D2D' }}>
                 <strong>{building.name}</strong>
                 <br />
-                {building.year} · {building.style}
+                <span style={{ color: '#6B6B6B' }}>{building.year} · {building.style}</span>
               </span>
             </Popup>
           </Marker>

@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react';
 import walks from './data/walks';
 import WalkMap from './components/WalkMap';
 import BuildingCard from './components/BuildingCard';
+import TourView from './components/TourView';
 
 const ERAS = [
   { label: 'All Eras', min: 0, max: 9999 },
@@ -25,6 +26,7 @@ export default function App() {
   const [selectedStyle, setSelectedStyle] = useState('');
   const [selectedEra, setSelectedEra] = useState(ERAS[0]);
   const [selectedNeighborhood, setSelectedNeighborhood] = useState('');
+  const [tourMode, setTourMode] = useState(false);
 
   // Filter buildings across all neighborhoods
   const filteredBuildings = useMemo(() => {
@@ -63,6 +65,10 @@ export default function App() {
 
   const hasFilters = selectedStyle || selectedEra !== ERAS[0] || selectedNeighborhood;
 
+  if (tourMode) {
+    return <TourView onExit={() => setTourMode(false)} />;
+  }
+
   return (
     <div className="min-h-screen bg-bg">
       {/* Header */}
@@ -79,6 +85,14 @@ export default function App() {
         >
           Explore NYC architecture by style, era, or neighborhood.
         </p>
+        <button
+          onClick={() => setTourMode(true)}
+          className="mt-4 inline-flex items-center gap-2 bg-accent text-bg text-xs font-mono tracking-wide px-4 py-2 rounded-md hover:bg-accent-hover transition-colors animate-fade-up"
+          style={{ animationDelay: '400ms' }}
+        >
+          <span>&#9670;</span>
+          Start Walking Tour: Art Deco Midtown
+        </button>
       </header>
 
       {/* Filters */}
