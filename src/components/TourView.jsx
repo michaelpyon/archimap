@@ -5,6 +5,15 @@ import artDecoTour from '../data/artDecoTour';
 import RestaurantCard from './RestaurantCard';
 import TourCard from './TourCard';
 
+// Leaflet L.divIcon uses inline HTML strings, so CSS variables cannot be injected.
+// Hardcoded values here match @theme tokens in index.css:
+//   #B8860B  = --color-accent
+//   #FAF7F0  = --color-bg
+//   #2D2D2D  = --color-text
+//   #996F09  = --color-accent-hover
+//   #D4CFC5  = --color-border
+//   rgba(184, 134, 11, 0.4) = --color-accent at 40% opacity
+//   rgba(45, 45, 45, 0.15)  = --color-text at 15% opacity
 function createTourIcon(number, isActive) {
   const size = isActive ? 36 : 28;
   return L.divIcon({
@@ -121,7 +130,7 @@ export default function TourView({ onExit }) {
               <Polyline
                 positions={artDecoTour.routeWaypoints}
                 pathOptions={{
-                  color: '#B8860B',
+                  color: '#B8860B', // --color-accent
                   weight: 3,
                   dashArray: '8, 10',
                   opacity: 0.6,
