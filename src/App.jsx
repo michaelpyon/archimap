@@ -87,7 +87,7 @@ export default function App() {
         </p>
         <button
           onClick={() => setTourMode(true)}
-          className="mt-4 inline-flex items-center gap-2 bg-accent text-bg text-xs font-mono tracking-wide px-4 py-2 rounded-md hover:bg-accent-hover transition-colors animate-fade-up"
+          className="mt-4 inline-flex items-center gap-2 bg-accent text-bg text-xs font-mono tracking-wide px-5 py-3 min-h-[44px] rounded-md hover:bg-accent-hover transition-colors animate-fade-up"
           style={{ animationDelay: '400ms' }}
         >
           <span>&#9670;</span>
@@ -101,7 +101,7 @@ export default function App() {
           <select
             value={selectedStyle}
             onChange={(e) => { setSelectedStyle(e.target.value); setActiveBuilding(0); }}
-            className="bg-surface border border-border rounded-md px-2 py-1.5 text-[11px] text-text-muted focus:outline-none focus:border-text-subtle shrink-0"
+            className="bg-surface border border-border rounded-md px-3 py-2.5 min-h-[44px] text-[11px] text-text-muted focus:outline-none focus:border-text-subtle shrink-0"
           >
             <option value="">Style</option>
             {ALL_STYLES.map(s => (
@@ -112,7 +112,7 @@ export default function App() {
           <select
             value={ERAS.indexOf(selectedEra)}
             onChange={(e) => { setSelectedEra(ERAS[Number(e.target.value)]); setActiveBuilding(0); }}
-            className="bg-surface border border-border rounded-md px-2 py-1.5 text-[11px] text-text-muted focus:outline-none focus:border-text-subtle shrink-0"
+            className="bg-surface border border-border rounded-md px-3 py-2.5 min-h-[44px] text-[11px] text-text-muted focus:outline-none focus:border-text-subtle shrink-0"
           >
             <option value="" disabled>Era</option>
             {ERAS.map((era, i) => (
@@ -123,7 +123,7 @@ export default function App() {
           <select
             value={selectedNeighborhood}
             onChange={(e) => { setSelectedNeighborhood(e.target.value); setActiveBuilding(0); }}
-            className="bg-surface border border-border rounded-md px-2 py-1.5 text-[11px] text-text-muted focus:outline-none focus:border-text-subtle shrink-0"
+            className="bg-surface border border-border rounded-md px-3 py-2.5 min-h-[44px] text-[11px] text-text-muted focus:outline-none focus:border-text-subtle shrink-0"
           >
             <option value="">Area</option>
             {ALL_NEIGHBORHOODS.map(n => (

@@ -27,7 +27,7 @@ function createNumberedIcon(number, isActive) {
       font-family: 'Inter', sans-serif;
       border: 2px solid ${isActive ? '#996F09' : '#D4CFC5'};
       box-shadow: 0 2px 8px rgba(45,45,45,0.15);
-      transition: all 0.2s ease;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     ">${number}</div>`,
     iconSize: [28, 28],
     iconAnchor: [14, 14],

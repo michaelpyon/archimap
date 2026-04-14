@@ -1,5 +1,5 @@
 /**
- * Curated NYC architecture walks — real buildings, real data.
+ * Curated NYC architecture walks. Real buildings, real data.
  * Sources: NYC Landmarks Preservation Commission, AIA Guide to NYC, Wikipedia.
  */
 
@@ -20,7 +20,7 @@ const walks = [
         year: 1913,
         architect: 'Cass Gilbert',
         style: 'Neo-Gothic',
-        description: 'The "Cathedral of Commerce" — tallest building in the world until 1930. Terra-cotta clad with a soaring lobby of Byzantine mosaics.',
+        description: 'The "Cathedral of Commerce," tallest building in the world until 1930. Terra-cotta clad with a soaring lobby of Byzantine mosaics.',
         wiki: 'https://en.wikipedia.org/wiki/Woolworth_Building',
       },
       {
@@ -96,7 +96,7 @@ const walks = [
         year: 1958,
         architect: 'Ludwig Mies van der Rohe & Philip Johnson',
         style: 'International Style',
-        description: '"Less is more" made real. Bronze and topaz glass on a travertine plaza — the most influential skyscraper of the 20th century.',
+        description: '"Less is more" made real. Bronze and topaz glass on a travertine plaza. The most influential skyscraper of the 20th century.',
         wiki: 'https://en.wikipedia.org/wiki/Seagram_Building',
       },
       {
@@ -107,7 +107,7 @@ const walks = [
         year: 1952,
         architect: 'Gordon Bunshaft (Skidmore, Owings & Merrill)',
         style: 'International Style',
-        description: 'The first glass curtain-wall skyscraper in NYC. A floating slab above an open ground-floor plaza — revolutionary in 1952.',
+        description: 'The first glass curtain-wall skyscraper in NYC. A floating slab above an open ground-floor plaza, revolutionary in 1952.',
         wiki: 'https://en.wikipedia.org/wiki/Lever_House',
       },
       {
@@ -279,7 +279,7 @@ const walks = [
     id: 'financial-district',
     neighborhood: 'Financial District',
     borough: 'Manhattan',
-    description: 'Where NYC began — Dutch colonial streets lined with early skyscrapers and Gothic churches.',
+    description: 'Where NYC began. Dutch colonial streets lined with early skyscrapers and Gothic churches.',
     center: [40.7075, -74.0113],
     zoom: 16,
     buildings: [
@@ -344,7 +344,7 @@ const walks = [
     id: 'greenwich-village',
     neighborhood: 'Greenwich Village',
     borough: 'Manhattan',
-    description: 'Bohemian heart of NYC — Federal row houses, hidden mews, and Washington Square.',
+    description: 'Bohemian heart of NYC. Federal row houses, hidden mews, and Washington Square.',
     center: [40.7336, -74.0027],
     zoom: 16,
     buildings: [

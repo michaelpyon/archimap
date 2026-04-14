@@ -2,13 +2,13 @@
 @import "leaflet/dist/leaflet.css";
 
 @theme {
-  /* Warm Art Deco palette — Stitch design tokens */
+  /* Warm Art Deco palette: Stitch design tokens */
   --color-bg: #FAF7F0;
   --color-surface: #F2EDE4;
   --color-surface-hover: #E8E1D5;
   --color-text: #2D2D2D;
-  --color-text-muted: #6B6B6B;
-  --color-text-subtle: #9B9B9B;
+  --color-text-muted: #5C5C5C;
+  --color-text-subtle: #757575;
   --color-border: #D4CFC5;
   --color-border-hover: #B8B1A4;
 

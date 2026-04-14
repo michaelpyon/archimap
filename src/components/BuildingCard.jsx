@@ -14,7 +14,7 @@ export default function BuildingCard({ building, index, isActive, onClick }) {
       ref={ref}
       onClick={onClick}
       className={`
-        w-full text-left rounded-lg border p-4 transition-all duration-200 group
+        w-full text-left rounded-lg border p-4 transition-[background-color,border-color] duration-200 group
         ${
           isActive
             ? 'bg-surface-hover border-border-hover'

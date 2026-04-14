@@ -1,5 +1,5 @@
 /**
- * Art Deco Midtown Walking Tour — 12 real stops.
+ * Art Deco Midtown Walking Tour: 12 real stops.
  * A curated route from Grand Central to Rockefeller Center.
  * Sources: NYC Landmarks Preservation Commission, AIA Guide to NYC, Wikipedia.
  */

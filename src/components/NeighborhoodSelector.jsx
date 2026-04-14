@@ -6,7 +6,7 @@ export default function NeighborhoodSelector({ walks, selected, onSelect }) {
           key={walk.id}
           onClick={() => onSelect(walk)}
           className={`
-            px-3 py-1.5 rounded text-xs font-mono tracking-wide transition-all duration-200 border
+            px-3 py-1.5 rounded text-xs font-mono tracking-wide transition-[background-color,border-color,color] duration-200 border
             ${
               selected?.id === walk.id
                 ? 'bg-accent text-bg border-accent'

@@ -32,7 +32,7 @@ function createTourIcon(number, isActive) {
       font-family: 'Inter', sans-serif;
       border: ${isActive ? '3px' : '2px'} solid ${isActive ? '#996F09' : '#D4CFC5'};
       box-shadow: ${isActive ? '0 0 16px rgba(184, 134, 11, 0.4)' : '0 2px 8px rgba(45,45,45,0.15)'};
-      transition: all 0.3s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     ">${number}</div>`,
     iconSize: [size, size],
     iconAnchor: [size / 2, size / 2],
@@ -87,7 +87,7 @@ export default function TourView({ onExit }) {
         </div>
         <button
           onClick={onExit}
-          className="text-xs font-mono text-text-subtle hover:text-text tracking-wide border border-border rounded-md px-3 py-1.5 hover:border-border-hover transition-colors"
+          className="text-xs font-mono text-text-subtle hover:text-text tracking-wide border border-border rounded-md px-4 py-2.5 min-h-[44px] hover:border-border-hover transition-colors"
         >
           Exit Tour
         </button>
@@ -101,7 +101,7 @@ export default function TourView({ onExit }) {
           </span>
           <div className="flex-1 h-1 bg-surface rounded-full overflow-hidden">
             <div
-              className="h-full bg-accent rounded-full transition-all duration-500 ease-out"
+              className="h-full bg-accent rounded-full transition-[width] duration-500 ease-out"
               style={{ width: `${((currentStop + 1) / stops.length) * 100}%` }}
             />
           </div>
@@ -239,7 +239,7 @@ export default function TourView({ onExit }) {
               <button
                 onClick={goPrev}
                 disabled={currentStop === 0}
-                className="text-xs font-mono tracking-wide px-3 py-1.5 rounded-md border border-border
+                className="text-xs font-mono tracking-wide px-4 py-2.5 min-h-[44px] rounded-md border border-border
                   enabled:hover:border-border-hover enabled:hover:text-text
                   disabled:opacity-30 disabled:cursor-not-allowed
                   text-text-muted transition-colors"
@@ -252,7 +252,7 @@ export default function TourView({ onExit }) {
               <button
                 onClick={goNext}
                 disabled={currentStop === stops.length - 1}
-                className="text-xs font-mono tracking-wide px-3 py-1.5 rounded-md border border-accent bg-accent text-bg
+                className="text-xs font-mono tracking-wide px-4 py-2.5 min-h-[44px] rounded-md border border-accent bg-accent text-bg
                   enabled:hover:bg-accent-hover
                   disabled:opacity-30 disabled:cursor-not-allowed
                   transition-colors"
