@@ -118,7 +118,7 @@ export default function TourView({ onExit }) {
               zoom={16}
               style={{ height: '100%', width: '100%' }}
               zoomControl={false}
-              attributionControl={false}
+              attributionControl={true}
             >
               <TileLayer
                 url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"

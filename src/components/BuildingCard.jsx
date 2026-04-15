@@ -26,7 +26,7 @@ export default function BuildingCard({ building, index, isActive, onClick }) {
         <span className={`text-xs font-mono tabular-nums ${isActive ? 'text-accent' : 'text-text-subtle'}`}>
           {String(index + 1).padStart(2, '0')}
         </span>
-        <h3 className={`text-sm font-semibold tracking-tight ${isActive ? 'text-text' : 'text-text'}`}>
+        <h3 className="text-sm font-semibold tracking-tight text-text">
           {building.name}
         </h3>
       </div>

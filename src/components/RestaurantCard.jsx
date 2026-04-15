@@ -2,7 +2,9 @@ export default function RestaurantCard({ affiliate }) {
   return (
     <a
       href={affiliate.url}
-      onClick={(e) => e.stopPropagation()}
+      target="_blank"
+      rel="noopener noreferrer"
+      onClick={(e) => { if (affiliate.url === '#') e.preventDefault(); e.stopPropagation(); }}
       className="block rounded-md border border-secondary/20 bg-secondary-dim p-3 transition-colors hover:border-secondary/40 group"
     >
       <div className="flex items-center gap-2 mb-1">

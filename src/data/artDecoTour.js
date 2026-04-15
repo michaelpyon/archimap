@@ -67,7 +67,7 @@ const artDecoTour = {
         'Eagle gargoyles modeled on Chrysler hood ornaments',
         'Lobby of African marble and Edward Trumbull ceiling mural',
       ],
-      walkingTo: 'Walk west on 42nd Street past Grand Central. The Daily News Building is 2 blocks east at 220 E 42nd.',
+      walkingTo: 'Continue east on 42nd Street. The Daily News Building is 2 blocks ahead at 220 E 42nd.',
       affiliates: [
         { type: 'restaurant', name: 'The Lexington Brass', note: 'Art Deco brasserie in the Chrysler Building lobby', url: '#' },
       ],
