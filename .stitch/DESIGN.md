@@ -17,8 +17,8 @@ NYC Art Deco walking tour guide. Premium architectural feel, warm and inviting. 
 | Token | Value | Usage |
 |---|---|---|
 | `--color-text` | `#2D2D2D` | Primary body text (charcoal) |
-| `--color-text-muted` | `#6B6B6B` | Secondary text, captions |
-| `--color-text-subtle` | `#9B9B9B` | Tertiary text, placeholders |
+| `--color-text-muted` | `#5C5C5C` | Secondary text, captions |
+| `--color-text-subtle` | `#757575` | Tertiary text, placeholders |
 
 ### Borders
 

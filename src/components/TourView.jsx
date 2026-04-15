@@ -61,6 +61,19 @@ export default function TourView({ onExit }) {
     }
   }, [currentStop]);
 
+  // Keyboard arrow navigation
+  useEffect(() => {
+    function handleKeyDown(e) {
+      if (e.key === 'ArrowRight' && currentStop < stops.length - 1) {
+        setCurrentStop(currentStop + 1);
+      } else if (e.key === 'ArrowLeft' && currentStop > 0) {
+        setCurrentStop(currentStop - 1);
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [currentStop, stops.length]);
+
   function goNext() {
     if (currentStop < stops.length - 1) setCurrentStop(currentStop + 1);
   }
